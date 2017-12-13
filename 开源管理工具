@@ -1,0 +1,22 @@
+官方文档
+http://www.redis.cn/topics/cluster-tutorial.html
+
+主要功能：操作和查看数据
+https://github.com/JoneXiong/PyRedisAdmin
+
+主要功能：集群监控
+https://github.com/junegunn/redis-stat 缺点：只能单点监控，无法整合图像
+https://github.com/LittlePeng/redis-monitor 缺点：只能单点监控，无法整合图像
+
+
+监控思路
+http://blog.csdn.net/dc_726/article/details/47699739#t4
+好文章
+http://blog.csdn.net/u010258235/article/details/50060127
+
+
+目前比较好监控思路：zabbix或open-falcon加grafana
+优点：
+1.可以批量合并图形，同时观看某几台机器的信息
+2.灵活的展示监控内容，避免了一般开源工具比较死的缺点
+3.可以自定义要展示的信息和内容

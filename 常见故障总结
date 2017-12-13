@@ -1,0 +1,5 @@
+[WARNING] Node 192.168.0.11:6380 has slots in migrating state (5461).
+[WARNING] The following slots are open: 5461
+可以使用redis命令取消slots迁移（5461为slot的ID）：
+cluster setslot 5461 stable
+

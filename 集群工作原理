@@ -1,0 +1,14 @@
+故障判定阶段
+1.持续判断每个slave最后一次完成repl-ping-slave-period成功到达master
+2.当达到cluster-node-timeout前，如果repl-ping-slave-period成功，则继续1的判断
+2.当达到cluster-node-timeout后，如果repl-ping-slave-period依旧没有成功，则集群slave节点认为master故障，开始进入仲裁阶段
+
+仲裁阶段
+1.进入仲裁阶段后，集群先查看所有slave节点的slave-priority，优先使用值最小的节点作为新的master
+2.当slave成为新的master，旧的master即使再重新加入集群，也会被降级为slave
+
+内存耗尽
+1.当redis使用的内存达到maxmemory，redis会根据maxmemory-policy设置的策略清除内存中的key，来为新key腾出空间
+2.如果不能清除内存中的key，或者maxmemory-policy设置为noeviction，客户端会返回一个错误，然后继续申请更多的内存，并只能响应GET之类的命令
+3.如果可以清除内存中的key，redis将根据maxmemory-policy配置的算法，清除部分或者全部满足条件的过期key，来为新key腾出空间
+4.maxmemory-policy的精确度将由maxmemory-samples决定，设置越大越精确
