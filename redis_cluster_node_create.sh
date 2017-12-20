@@ -200,6 +200,7 @@ activerehashing yes
 client-output-buffer-limit normal 0 0 0
 client-output-buffer-limit slave 256mb 64mb 60
 client-output-buffer-limit pubsub 32mb 8mb 60
+# redis关闭客户端超时的连接，清除未被请求过的过期Key等操作的频率，默认10，官方不建议设置超过100，该参数提高会增加cpu开销，但可以提高高并发处理速度
 hz 10
 aof-rewrite-incremental-fsync yes
 # lfu-log-factor 10
