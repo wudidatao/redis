@@ -130,11 +130,11 @@ slave-priority 100
 # 设置最大可用内存，单位是字节，默认被注释，表示不限制
 # maxmemory <bytes>
 # 内存过期算法 
-# volatile-lru:使用LRU算法来删除一个集合中过期的key
+# volatile-lru:使用LRU算法来删除一个集合中过期的key，适合有明显时间顺序的数据
 # allkeys-lru:使用LRU算法来删除所有过期的key
 # volatile-lfu:使用LFU算法来删除一个集合中过期的key
 # allkeys-lfu:使用LFU算法来删除所有过期的key
-# volatile-random:使用随机算法来删除一个集合中过期的key
+# volatile-random:使用随机算法来删除一个集合中过期的key，适合随机数据
 # allkeys-random:使用随机算法来删除所有过期的key
 # volatile-ttl:删除最近即将过期的key（the nearest expire time (minor TTL)）
 # noeviction :根本不过期，写操作直接报错(默认)
@@ -200,7 +200,9 @@ activerehashing yes
 client-output-buffer-limit normal 0 0 0
 client-output-buffer-limit slave 256mb 64mb 60
 client-output-buffer-limit pubsub 32mb 8mb 60
-# redis关闭客户端超时的连接，清除未被请求过的过期Key等操作的频率，默认10，官方不建议设置超过100，该参数提高会增加cpu开销，但可以提高高并发处理速度
+# redis关闭客户端超时的连接，清除未被请求过的过期Key等操作的频率，默认10
+# 该参数影响serverCron频率，serverCron每间隔1000/hz ms会调用databasesCron方法来检测并淘汰过期的key。
+# 官方不建议设置超过100，该参数提高会增加cpu开销，但可以提高高并发处理速度
 hz 10
 aof-rewrite-incremental-fsync yes
 # lfu-log-factor 10
