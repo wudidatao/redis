@@ -16,6 +16,7 @@ echo "
 重新记录慢查询 slowlog reset
 关闭redis服务器 shutdown
 故障转移，从库执行后提升为主库 cluster failover
+查看当前所有客户端连接信息 client list
 "
 
 #集群现有的任意节点
