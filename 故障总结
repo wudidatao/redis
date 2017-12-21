@@ -3,3 +3,6 @@
 可以使用redis命令取消slots迁移（5461为slot的ID）：
 cluster setslot 5461 stable
 
+专家参考
+1.美团redis踩过的坑
+http://blog.csdn.net/liqfyiyi/article/details/50893989
