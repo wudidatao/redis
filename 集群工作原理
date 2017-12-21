@@ -12,3 +12,16 @@
 2.如果不能清除内存中的key，或者maxmemory-policy设置为noeviction，客户端会返回一个错误，然后继续申请更多的内存，并只能响应GET之类的命令
 3.如果可以清除内存中的key，redis将根据maxmemory-policy配置的算法，清除部分或者全部满足条件的过期key，来为新key腾出空间
 4.maxmemory-policy的精确度将由maxmemory-samples决定，设置越大越精确
+
+LRU过期数据清理
+1.主动清理，redis提供了serverCron方法来周期性的清理过期数据（serverCron每间隔1000/hz ms会调用databasesCron方法来检测并淘汰过期的key）
+2.被动清理，每次写入key时，发现内存不够，调用activeExpireCycle释放一部分内存，每次访问相关的key，如果发现key过期，直接释放掉该key相关的内存
+
+redis做为缓存，经常采用LRU的策略来淘汰数据，所以如果同时过期的数据太多，就会导致redis发起主动检测时耗费的时间过长(最大为250ms)，从而导致最大应用超时 >= 250ms。
+
+timelimit = 1000000*ACTIVE_EXPIRE_CYCLE_SLOW_TIME_PERC/server.hz/100   
+ACTIVE_EXPIRE_CYCLE_SLOW_TIME_PERC=25  
+server.hz>=1(默认为10)  
+timelimit <= 250ms 
+
+内存使用率过高，则会导致内存不够，从而发起被动淘汰策略，从而使应用访问超时，合理的调整hz参数，从而控制每次主动淘汰的频率，从而有效的缓解过期的key数量太多带来的上述超时问题
