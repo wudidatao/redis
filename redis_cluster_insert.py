@@ -18,6 +18,7 @@ def redis_cluster():
                   ]
     try:
         redisconn = StrictRedisCluster(startup_nodes=redis_nodes)
+        #redisconn = StrictRedisCluster(startup_nodes=redis_nodes，password='')
     
     except Exception,e:
         print "连接错误！"
