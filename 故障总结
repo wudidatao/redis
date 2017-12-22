@@ -3,6 +3,11 @@
 可以使用redis命令取消slots迁移（5461为slot的ID）：
 cluster setslot 5461 stable
 
+故障2:
+command not allowed when used memory > 'maxmemory'
+原因：
+redis在收到读写请求时，会检查是否设置了最大内存限制，如果设置了会尝试释放无用内存，如果释放内存失败，而且命令可能占用大量内存，则返回错误，命令不会执行
+
 专家参考
 1.美团redis踩过的坑
 http://blog.csdn.net/liqfyiyi/article/details/50893989
