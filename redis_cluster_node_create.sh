@@ -152,14 +152,16 @@ slave-lazy-flush no
 appendonly yes
 # appendonly文件名
 appendfilename "appendonly.aof"
-# appendfsync always 每次收到写命令就立即强制写入磁盘，最慢的，但是保证完全的持久化，不推荐使用
+# appendfsync always 每次收到aof写命令就立即强制写入磁盘，最慢的，但是保证完全的持久化，不推荐使用
 # appendfsync everysec 每秒钟强制写入磁盘一次，在性能和持久化方面做了很好的折中，默认值，推荐
-# appendfsync no 完全依赖os，性能最好,持久化没保证
+# appendfsync no 完全依赖os，一般为30秒左右一次，性能最好,持久化没保证
 appendfsync everysec
-no-appendfsync-on-rewrite no
-auto-aof-rewrite-percentage 100
+# aof自动重写的百分比，默认100，表示当aof文件当前大小为1G，则下一次重写时间为aof增长为2G的时候，如果命令中重复较多，可以减少这个比例到50，如果重复较少，可以使用默认值
 auto-aof-rewrite-min-size 64mb
-# 当一个子进程重写AOF文件时，如果启用下面的选项，则文件每生成32M数据会被同步。为了增量式的写入硬盘并且避免大的延迟高峰这个指令是非常有用的
+no-appendfsync-on-rewrite no
+
+# 默认64mb表示如果aof文件大于64mb就进行重写。
+auto-aof-rewrite-percentage 100
 aof-rewrite-incremental-fsync yes
 # Redis3.0参数，redis在启动时可以加载被截断的AOF文件，而不需要先执行redis-check-aof工具
 aof-load-truncated yes
