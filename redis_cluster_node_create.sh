@@ -158,8 +158,8 @@ appendfilename "appendonly.aof"
 appendfsync everysec
 # aof自动重写的百分比，默认100，表示当aof文件当前大小为1G，则下一次重写时间为aof增长为2G的时候，如果命令中重复较多，可以减少这个比例到50，如果重复较少，可以使用默认值
 auto-aof-rewrite-min-size 64mb
+#在日志重写时，不进行命令追加操作，而只是将其放在缓冲区里，避免与命令的追加造成DISK IO上的冲突？？？？？？？？？？？？？？？
 no-appendfsync-on-rewrite no
-
 # 默认64mb表示如果aof文件大于64mb就进行重写。
 auto-aof-rewrite-percentage 100
 aof-rewrite-incremental-fsync yes
