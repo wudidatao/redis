@@ -168,13 +168,13 @@ slave-priority 100
 # maxmemory <bytes>
 
 # 内存过期算法 
-# volatile-lru:使用LRU算法来删除一个集合中过期的key，适合有明显时间顺序的数据
-# allkeys-lru:使用LRU算法来删除所有过期的key
+# volatile-lru:使用LRU算法来删除一个集合中过期的key
+# allkeys-lru:使用LRU算法来删除所有过期的key，适合没有明显热点数据，没有设置过期时间的数据
 # volatile-lfu:使用LFU算法来删除一个集合中过期的key
-# allkeys-lfu:使用LFU算法来删除所有过期的key
+# allkeys-lfu:使用LFU算法来删除所有过期的key，适合有明显热点数据，没有设置过期时间的数据
 # volatile-random:使用随机算法来删除一个集合中过期的key，适合随机数据
 # allkeys-random:使用随机算法来删除所有过期的key
-# volatile-ttl:删除最近即将过期的key（the nearest expire time (minor TTL)）
+# volatile-ttl:删除最近即将过期的key（the nearest expire time (minor TTL)，适合设置了过期时间的数据
 # noeviction :根本不过期，写操作直接报错(默认)
 # maxmemory-policy noeviction
 
