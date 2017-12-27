@@ -311,8 +311,9 @@ client-output-buffer-limit pubsub 32mb 8mb 60
 # 官方不建议设置超过100，该参数提高会增加cpu开销，但可以提高高并发处理速度
 hz 10
 
-#AOF重写的时候，如果打开了aof-rewrite-incremental-fsync开关，系统会每32MB执行一次fsync。这对于把文件写入磁盘是有帮助的，可以避免过大的延迟峰值
+# AOF重写的时候，如果打开了aof-rewrite-incremental-fsync开关，系统会每32MB执行一次fsync。这对于把文件写入磁盘是有帮助的，可以避免过大的延迟峰值
 aof-rewrite-incremental-fsync yes
+
 # lfu-log-factor 10
 # lfu-decay-time 1
 ########################### ACTIVE DEFRAGMENTATION #######################
