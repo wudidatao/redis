@@ -255,21 +255,55 @@ slowlog-log-slower-than 10000
 # 慢查询日志直接纪录在内存中，默认128条，可以通过SLOWLOG RESET来释放慢查询占用的内存
 slowlog-max-len 128
 ################################ LATENCY MONITOR ##############################
+# #延迟监控功能是用来监控redis中执行比较缓慢的一些操作，用LATENCY打印redis实例在跑命令时的耗时图表。
+# 只记录大于等于下边设置的值的操作。0的话，就是关闭监视。默认延迟监控功能是关闭的，如果你需要打开，也可以通过CONFIG SET命令动态设置。
 latency-monitor-threshold 0
 ############################# EVENT NOTIFICATION ##############################
 # notify-keyspace-events ""
 ############################### ADVANCED CONFIG ###############################
+# 数据量小于等于hash-max-ziplist-entries的用ziplist，大于hash-max-ziplist-entries用hash
 hash-max-ziplist-entries 512
+
+# value大小小于等于hash-max-ziplist-value的用ziplist，大于hash-max-ziplist-value用hash
 hash-max-ziplist-value 64
+
+# 数据量小于等于list-max-ziplist-entries用ziplist，大于list-max-ziplist-entries用list
 list-max-ziplist-size -2
+
 list-compress-depth 0
+
+# 数据量小于等于set-max-intset-entries用iniset，大于set-max-intset-entries用set
 set-max-intset-entries 512
+
+# 数据量小于等于zset-max-ziplist-entries用ziplist，大于zset-max-ziplist-entries用zset
 zset-max-ziplist-entries 128
+
+# value大小小于等于zset-max-ziplist-value用ziplist，大于zset-max-ziplist-value用zset
 zset-max-ziplist-value 64
+
+# value大小小于等于hll-sparse-max-bytes使用稀疏数据结构(sparse)，大于hll-sparse-max-bytes使用稠密的数据结构(dense)
 hll-sparse-max-bytes 3000
+
+# hash table是一种高效的数据结构，被广泛的用在key-value存储中，Redis的dict其实就是一个典型的hash table实现。
+# rehash是在hash table的大小不能满足需求，造成过多hash碰撞后需要进行的扩容hash table的操作，其实通常的做法确实是建立一个额外的hash table，将原来的hash table中的数据在新的数据中进行重新输入，从而生成新的hash表。redis的 rehash包括了lazy rehashing和active rehashing两种方式
+# lazy rehashing：在每次对dict进行操作的时候执行一个slot的rehash
+# active rehashing：每100ms里面使用1ms时间进行rehash。
+# 当你的使用场景中，有非常严格的实时性需要，不能够接受Redis时不时的对请求有2毫秒的延迟的话，把这项配置为no。
+# 如果没有这么严格的实时性要求，可以设置为yes，以便能够尽可能快的释放内存。
 activerehashing yes
+
+# 客户端输出缓冲区类型：
+# normal 表示一般的客户端
+# slave 表示从节点，从节点也被看成一种客户端
+# pubsub 发布与订阅的客户端
+# 缓冲区大小限制类型：
+# 缓冲区大小的硬性限制，即最大值，一旦达到就立刻关闭连接
+# 缓冲去大小的软性限制，即容忍值，它和seconds配合,如果buffer值超过soft且持续时间达到了seconds，也立刻关闭
+# 一般客户端不做任何限制，这样很危险，当monitor之类的命令会占用大量客户端输出缓冲区，造成内存飙升，建议做一些限制
 client-output-buffer-limit normal 0 0 0
+# 从节点客户端，256M硬限制，64M软限制，持续时间60秒
 client-output-buffer-limit slave 256mb 64mb 60
+# 发布与订阅的客户端，32M硬限制，8M软限制，持续时间60秒
 client-output-buffer-limit pubsub 32mb 8mb 60
 
 # redis关闭客户端超时的连接，清除未被请求过的过期Key等操作的频率，默认10
@@ -277,6 +311,7 @@ client-output-buffer-limit pubsub 32mb 8mb 60
 # 官方不建议设置超过100，该参数提高会增加cpu开销，但可以提高高并发处理速度
 hz 10
 
+#AOF重写的时候，如果打开了aof-rewrite-incremental-fsync开关，系统会每32MB执行一次fsync。这对于把文件写入磁盘是有帮助的，可以避免过大的延迟峰值
 aof-rewrite-incremental-fsync yes
 # lfu-log-factor 10
 # lfu-decay-time 1
