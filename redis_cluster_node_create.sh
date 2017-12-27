@@ -228,15 +228,31 @@ cluster-enabled yes
 # 集群节点的超时时间，当节点达到这个时间，集群其他节点才会认为该节点失效，默认15秒
 cluster-node-timeout 15000
 
+# 在进行故障转移的时候，全部slave都会请求申请为master，但是有些slave可能与master断开连接一段时间了，导致数据过于陈旧，
+# 这样的slave不应该被提升为master。该参数就是用来判断slave节点与master断线的时间是否过长。判断方法是：
+# 比较slave断开连接的时间和(node-timeout *slave-validity-factor) + repl-ping-slave-period
+# 如果节点超时时间为15秒, 并且slave-validity-factor为10,假设默认的repl-ping-slave-period是10秒，即如果超过160秒slave将不会尝试进行故障转移
+# 可能出现由于某主节点失联却没有从节点能顶上的情况，从而导致集群不能正常工作，在这种情况下，只有等到原来的主节点重新回归到集群，集群才恢复运作
+# 如果设置成０，则无论从节点与主节点失联多久，从节点都会尝试升级成主节点
 # cluster-slave-validity-factor 10
+
+# 主节点需要的最小从节点数，只有达到这个数，主节点失败时，它从节点才会进行迁移
 # cluster-migration-barrier 1
+
+# 当一定比例的键空间没有被覆盖到(就是某一部分的哈希槽没了，有可能是暂时挂了),集群就停止处理任何查询操作
+# 如果该项设置为no，那么就算请求中只有一部分的键可以被查到，一样可以查询(但是有可能会查不全)
 # cluster-require-full-coverage yes
+
 ########################## CLUSTER DOCKER/NAT support  ########################
 # cluster-announce-ip 10.1.1.5
 # cluster-announce-port 6379
 # cluster-announce-bus-port 6380
 ################################## SLOW LOG ###################################
+# 执行时间比slowlog-log-slower-than大的请求记录到slowlog里面，单位是微秒，所以1000000就是1秒
+# 注意，负数时间会禁用慢查询日志，而0则会强制记录所有命令
 slowlog-log-slower-than 10000
+
+# 慢查询日志直接纪录在内存中，默认128条，可以通过SLOWLOG RESET来释放慢查询占用的内存
 slowlog-max-len 128
 ################################ LATENCY MONITOR ##############################
 latency-monitor-threshold 0
