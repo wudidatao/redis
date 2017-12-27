@@ -200,18 +200,22 @@ appendfsync everysec
 # 默认64mb表示如果aof文件大于64mb就进行重写。
 auto-aof-rewrite-min-size 64mb
 
-#在日志重写时，不进行命令追加操作，而只是将其放在缓冲区里，避免与命令的追加造成DISK IO上的冲突？？？？？？？？？？？？？？？
+# 在日志重写时，不进行命令追加操作，而只是将其放在缓冲区里，避免与命令的追加造成DISK IO上的冲突？？？？？？？？？？？？？？？
 no-appendfsync-on-rewrite no
 
 # aof自动重写的百分比，默认100，当前AOF文件大小是上次日志重写得到AOF文件大小的二倍时，自动启动新的日志重写过程
 auto-aof-rewrite-percentage 100
 
+# 在AOF重写的时候，如果打开了aof-rewrite-incremental-fsync，系统会每auto-aof-rewrite-min-size执行一次fsync。
+# 这对于把文件写入磁盘是有帮助的，可以避免过大的延迟峰值
 aof-rewrite-incremental-fsync yes
 
 # Redis3.0参数，redis在启动时可以加载被截断的AOF文件，而不需要先执行redis-check-aof工具
 aof-load-truncated yes
 
 aof-use-rdb-preamble no
+# Redis 4.0新增了RDB-AOF混合持久化格式， 这是一个可选的功能,在开启了这个功能之后， AOF重写产生的文件将同时包含RDB格式的内容和AOF格式的内容， 其中RDB格式的内容用于记录已有的数据， 
+而AOF格式的内存则用于记录最近发生了变化的数据，这样Redis就可以同时兼有RDB持久化和AOF持久化的优点——既能够快速地生成重写文件，也能够在出现问题时，快速地载入数据。
 ################################ LUA SCRIPTING  ###############################
 lua-time-limit 5000
 ################################ REDIS CLUSTER  ###############################
