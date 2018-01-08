@@ -1,5 +1,7 @@
+故障1：
 [WARNING] Node 192.168.0.11:6380 has slots in migrating state (5461).
 [WARNING] The following slots are open: 5461
+
 可以使用redis命令取消slots迁移（5461为slot的ID）：
 cluster setslot 5461 stable
 
@@ -8,6 +10,15 @@ command not allowed when used memory > 'maxmemory'
 原因：
 redis在收到读写请求时，会检查是否设置了最大内存限制，如果设置了会尝试释放无用内存，如果释放内存失败，而且命令可能占用大量内存，则返回错误，命令不会执行
 
+故障3：
+(error) MISCONF Redis is configured to save RDB snapshots, but is currently not able to persist on disk. Commands that may modify the data set are disabled. Please check Redis logs for details about the error．
+原因：持久化方式为noeviction，未设置maxmemory，由于内存不足，导致rdb生成失败（Can't save in background: fork: Cannot allocate memory）,stop-writes-on-bgsave-error设置为yes，所以集群无法继续写入数据，报错
+解决：不能用stop-writes-on-bgsave-error no，这样会导致rdb失去作用，最好是增加内存，或者扩展节点，才能从根本上解决。
+
+
 专家参考
 1.美团redis踩过的坑
 http://blog.csdn.net/liqfyiyi/article/details/50893989
+
+
+
