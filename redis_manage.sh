@@ -34,11 +34,9 @@ else
     random_port=$set_random_port
 fi
 
-read -p '输入命令:' cmd
-
 read -p '输入密码，如果没设置密码为空:' set_password
 if [ -z $set_password ];then
-    redis-cli -h $random_ip -p $random_port $cmd
+    redis-cli -h $random_ip -p $random_port
 else
-    redis-cli -h $random_ip -p $random_port -a $set_password $cmd 
+    redis-cli -h $random_ip -p $random_port -a $set_password
 fi
