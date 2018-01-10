@@ -1,2 +1,3 @@
+-c 以集群形式发出命令，可以避免ACK和MOVE
 --stat 详细统计信息
 --bigkeys 大键扫描
