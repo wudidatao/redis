@@ -12,3 +12,4 @@
 --stat 详细统计信息
 --bigkeys 大键扫描
 --latency 有三个选项，--latency、--latency-history、--latency-dist
+--lru-test 通过对当前集群lru高并发测试，可以估算出大概内存的合理范围
