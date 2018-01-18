@@ -7,7 +7,7 @@ version=4.0.2
 #redis安装目录
 redis_path=$path/redis-$version
 #节点随机ip
-random_ip=192.168.100.190
+random_ip=`ip address | egrep "global e|global dynamic e"| cut -d ' ' -f6 | cut -d '/' -f1`
 #节点随机端口
 random_port=6379
 
