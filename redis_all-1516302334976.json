@@ -95,7 +95,7 @@
   "refresh": "1m",
   "rows": [
     {
-      "collapse": false,
+      "collapse": true,
       "height": -297,
       "panels": [
         {
@@ -181,19 +181,21 @@
           },
           "yaxes": [
             {
+              "decimals": 0,
               "format": "none",
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": "0",
               "show": true
             },
             {
+              "decimals": 0,
               "format": "none",
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": "0",
               "show": true
             }
           ]
@@ -407,7 +409,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "height": -474,
       "panels": [
         {
@@ -725,7 +727,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "height": -1357,
       "panels": [
         {
@@ -6892,8 +6894,8 @@
     ]
   },
   "time": {
-    "from": "now-3h",
-    "to": "now"
+    "from": "2018-01-18T18:37:36.386Z",
+    "to": "2018-01-18T19:04:50.534Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -6922,5 +6924,5 @@
   },
   "timezone": "browser",
   "title": "redis_all",
-  "version": 75
+  "version": 76
 }
