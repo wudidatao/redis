@@ -18,6 +18,7 @@ if [ ! -e $path/ruby-2.3.1.tar.gz ];then
     cd ruby-2.3.1
     ./configure
     make && make install
+fi
 
 yum install rubygems -y
 gem install redis
