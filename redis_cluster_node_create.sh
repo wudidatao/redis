@@ -1,8 +1,7 @@
 #!/bin/bash
-
+# 创建集群空节点
 . ./base.sh
 
-# 创建集群空节点
 read -p '版本,最新3.2.11和4.0.2,默认4.0.2:' version_set
 if [ ! -z $version_set ];then
         version=$version_set
