@@ -12,8 +12,7 @@ yum install net-tools -y
 #创建自动发现端口文件
 cd $zabbix_conf_path
 
-echo "
-#!/usr/bin/env python 
+echo "#!/usr/bin/env python 
 import os 
 import json 
 #import simplejson as json
