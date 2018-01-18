@@ -14,7 +14,7 @@ random_port=6379
 #redis默认端口
 port=6379
 #容器内部的主机名
-hostname=`ip address | grep "global e"| cut -d ' ' -f6 | cut -d '/' -f1 | cut -d '.' -f4`$port
+hostname=`ip address | egrep "global e|global dynamic e"| cut -d ' ' -f6 | cut -d '/' -f1`$port
 #容器名
 container_name=redis-$version-$port-running
 #redis基础目录
