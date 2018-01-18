@@ -12,11 +12,12 @@ yum install net-tools -y
 #创建自动发现端口文件
 cd $zabbix_conf_path
 
-echo "#!/usr/bin/env python 
+echo "
+#!/usr/bin/env python 
 import os 
 import json 
 #import simplejson as json
-t=os.popen("""sudo netstat -tlpn |grep redis-server|grep 0.0.0.0|awk '{print $4}'|awk -F: '{print $2}' """) 
+t=os.popen(\"\"\"sudo netstat -tlpn |grep redis-server|grep 0.0.0.0|awk '{print $4}'|awk -F: '{print $2}' \"\"\") 
 ports = [] 
 for port in  t.readlines(): 
         r = os.path.basename(port.strip()) 
@@ -24,6 +25,7 @@ for port in  t.readlines():
 print json.dumps({'data':ports},sort_keys=True,indent=4,separators=(',',':'))
 " > redis_port.py
 
+ setenforce 0
 
 #创建zabbix监控redis配置文件
 cd $zabbix_conf_path/zabbix_agentd.d
