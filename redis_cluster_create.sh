@@ -15,11 +15,18 @@ if [ ! -e $path/ruby-2.3.1.tar.gz ];then
     cd $path
     wget https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.gz
     tar -zxvf ruby-2.3.1.tar.gz
+    
     cd ruby-2.3.1
     ./configure
     make && make install
+
+    cd ext/zlib
+    ruby ./extconf.rb
+    make && make install
 fi
 
+
+yum install gcc openssl-devel -y
 yum install rubygems -y
 gem install redis
 
