@@ -2,17 +2,6 @@
 # 创建集群空节点
 . ./base.sh
 
-#容器内部的主机名
-hostname=`ip address | grep "global e"| cut -d ' ' -f6 | cut -d '/' -f1 | cut -d '.' -f4`$port
-#容器名
-container_name=redis-$version-$port-running
-#redis基础目录
-redis_home=/data/redis/$version-$port
-#redis配置文件目录
-redis_conf=$redis_home/conf
-#redis数据文件目录
-redis_data=$redis_home/data
-
 #创建目录
 mkdir -p $redis_home $redis_conf $redis_data
 
