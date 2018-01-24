@@ -2,11 +2,6 @@
 # 创建集群空节点
 . ./base.sh
 
-read -p '端口,默认6379:' port_set
-if [ ! -z $port_set ];then
-        port=$port_set
-fi
-
 #容器内部的主机名
 hostname=`ip address | grep "global e"| cut -d ' ' -f6 | cut -d '/' -f1 | cut -d '.' -f4`$port
 #容器名
