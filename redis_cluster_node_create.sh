@@ -2,11 +2,6 @@
 # 创建集群空节点
 . ./base.sh
 
-read -p '版本,最新3.2.11和4.0.2,默认4.0.2:' version_set
-if [ ! -z $version_set ];then
-        version=$version_set
-fi
-
 read -p '端口,默认6379:' port_set
 if [ ! -z $port_set ];then
         port=$port_set
