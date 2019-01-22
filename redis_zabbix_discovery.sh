@@ -16,7 +16,7 @@ echo "#!/usr/bin/env python
 import os 
 import json 
 #import simplejson as json
-t=os.popen(\"\"\"sudo netstat -tlpn |grep redis-server|grep 0.0.0.0|awk '{print $4}'|awk -F: '{print $2}' \"\"\") 
+t=os.popen("""sudo netstat -tlpn |grep redis-server|grep 0.0.0.0|awk '{print $4}'|awk -F: '{print $2}' """) 
 ports = [] 
 for port in  t.readlines(): 
         r = os.path.basename(port.strip()) 
