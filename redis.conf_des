@@ -210,13 +210,8 @@ cluster-node-timeout 15000
 # cluster-require-full-coverage yes
 
 # 5.0参数
-# This option, when set to yes, prevents replicas from trying to failover its
-# master during master failures. However the master can still perform a
-# manual failover, if forced to do so.
-#
-# This is useful in different scenarios, especially in the case of multiple
-# data center operations, where we want one side to never be promoted if not
-# in the case of a total DC failure.
+# This option, when set to yes, prevents replicas from trying to failover its master during master failures. However the master can still perform a manual failover, if forced to do so.
+# This is useful in different scenarios, especially in the case of multiple data center operations, where we want one side to never be promoted if not in the case of a total DC failure.
 # cluster-replica-no-failover no
 
 ########################## CLUSTER DOCKER/NAT support  ########################
