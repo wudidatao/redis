@@ -199,6 +199,8 @@ cluster-node-timeout 15000
 # 可能出现由于某主节点失联却没有从节点能顶上的情况，从而导致集群不能正常工作，在这种情况下，只有等到原来的主节点重新回归到集群，集群才恢复运作
 # 如果设置成０，则无论从节点与主节点失联多久，从节点都会尝试升级成主节点
 # cluster-slave-validity-factor 10
+# 5.0之后该参数
+# cluster-replica-validity-factor 10
 
 # 主节点需要的最小从节点数，只有达到这个数，主节点失败时，它从节点才会进行迁移
 # cluster-migration-barrier 1
