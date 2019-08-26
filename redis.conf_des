@@ -189,7 +189,7 @@ cluster-enabled yes
 # 集群配置文件，该文件为系统自动生成，不能人工操作，这里指定该文件名称，docker环境下注释该参数即可
 # cluster-config-file nodes-6379.conf
 
-# 集群节点的超时时间，当节点达到这个时间，集群其他节点才会认为该节点失效，默认15秒
+#slave与master的超时时间，超过这个时间，则slave认为master节点挂掉了，单位是毫秒，默认15秒。
 cluster-node-timeout 15000
 
 # 在进行故障转移的时候，全部slave都会请求申请为master，但是有些slave可能与master断开连接一段时间了，导致数据过于陈旧，
@@ -199,7 +199,7 @@ cluster-node-timeout 15000
 # 可能出现由于某主节点失联却没有从节点能顶上的情况，从而导致集群不能正常工作，在这种情况下，只有等到原来的主节点重新回归到集群，集群才恢复运作
 # 如果设置成０，则无论从节点与主节点失联多久，从节点都会尝试升级成主节点
 # cluster-slave-validity-factor 10
-# 5.0参数
+# 5.0该参数改为
 # cluster-replica-validity-factor 10
 
 # 主节点需要的最小从节点数，只有达到这个数，主节点失败时，它从节点才会进行迁移
