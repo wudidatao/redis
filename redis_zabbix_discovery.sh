@@ -29,7 +29,7 @@ print json.dumps({'data':ports},sort_keys=True,indent=4,separators=(',',':'))
 #创建zabbix监控redis配置文件
 cd $zabbix_conf_path/zabbix_agentd.d
 
-echo "UserParameter=redis_stats[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 info|grep \$2|cut -d : -f2
+echo "UserParameter=redis_stats[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 info 2>/dev/null|grep \$2|cut -d : -f2
 
 #自动发现
 UserParameter=redis.discovery,python $zabbix_conf_path/redis_port.py
