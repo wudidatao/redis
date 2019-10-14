@@ -16,7 +16,7 @@ echo "#!/usr/bin/env python
 import os 
 import json 
 #import simplejson as json
-t=os.popen("""sudo netstat -tlpn |grep redis-server|grep 0.0.0.0|awk '{print $4}'|awk -F: '{print $2}' """) 
+t=os.popen(\"\"\"sudo netstat -tlpn |grep redis-server|grep 0.0.0.0|awk '{print $4}'|awk -F: '{print $2}' \"\"\") 
 ports = [] 
 for port in  t.readlines(): 
         r = os.path.basename(port.strip()) 
@@ -32,7 +32,7 @@ cd $zabbix_conf_path/zabbix_agentd.d
 echo "UserParameter=redis_stats[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 info|grep \$2|cut -d : -f2
 
 #自动发现
-UserParameter=redis.discovery,$zabbix_conf_path/redis_port.py
+UserParameter=redis.discovery,python $zabbix_conf_path/redis_port.py
 
 #自动发现慢查询日志
 UserParameter=redis_slowlog_len_max[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 CONFIG GET slowlog-max-len |sed -n 2p
