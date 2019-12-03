@@ -37,7 +37,7 @@ UserParameter=redis.discovery,python $zabbix_conf_path/redis_port.py
 #自动发现慢查询日志
 UserParameter=redis_slowlog_len_max[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 CONFIG GET slowlog-max-len 2>/dev/null|sed -n 2p
 UserParameter=redis_slowlog_len[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 SLOWLOG LEN 2>/dev/null|cut -d : -f2
-UserParameter=redis_slowlog_last[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 SLOWLOG GET 1 2>/dev/null|cut -d : -f2|xargs -l7
+UserParameter=redis_slowlog_last[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 SLOWLOG GET 1 2>/dev/null|xargs -l20
 UserParameter=redis_slowlog_slower_than[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 CONFIG GET slowlog-log-slower-than 2>/dev/null |sed -n 2p
 
 #当前keys数
