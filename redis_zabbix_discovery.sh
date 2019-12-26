@@ -40,6 +40,13 @@ UserParameter=redis_slowlog_len[*],$redis_cli_path -h $localhost -a $redis_passw
 UserParameter=redis_slowlog_last[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 SLOWLOG GET 1 2>/dev/null|xargs -l20
 UserParameter=redis_slowlog_slower_than[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 CONFIG GET slowlog-log-slower-than 2>/dev/null |sed -n 2p
 
-#当前keys数
+#db0的keys数
 UserParameter=redis_db0_keys[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 info 2>/dev/null| grep db0 |cut -d '=' -f2 |cut -d ',' -f1
+#db0有过期状态的键值数
+UserParameter=redis_db0_expires[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 info 2>/dev/null| grep db0 |cut -d '=' -f3 |cut -d ',' -f1
+#抽样估算平均过期时间,如果无TTL键或在Slave则avg_ttl一直为0
+UserParameter=redis_db0_avg_ttl[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 info 2>/dev/null| grep db0 |cut -d '=' -f4
+
+#client list(未测试自动化)
+UserParameter=redis_client_list[*],$redis_cli_path -h $localhost -a $redis_password -p \$1 client list 2>/dev/null| awk '{\$\$4="";print \$\$0}' > /var/log/redis/redis_client_\$1.log
 " > userparameter_redis.conf
